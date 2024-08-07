@@ -47,9 +47,17 @@ function App() {
       return 'Get One Done 💫';
     }
     if (percentage === 100) {
-      return 'Nice job for today! 🏝';
+      return 'All Tasks Complete ❤️‍🔥';
     }
-    return 'Keep it going 💪🏻';
+    return 'Keep going 🔒';
+  }
+
+  function renameTask(index,newName) {
+    setTasks(prev => {
+      const newTasks = [...prev];
+      newTasks[index].name = newName;
+      return newTasks;
+    })
   }
 
   return (
@@ -59,6 +67,7 @@ function App() {
     <TaskForm onAdd ={addTask}/>
     {tasks.map((task, index : number)=> (
       <Task {...task} 
+        onRename={newName => renameTask(index,newName)}
         onTrash={() => removeTask(index)}
         onToggle={done => updateTaskDone(index, done)}/>
     ))}
