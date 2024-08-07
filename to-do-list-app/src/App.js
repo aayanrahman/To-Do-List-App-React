@@ -61,18 +61,20 @@ function App() {
   }
 
   return (
-   <main>
-    <h1>{numberComplete}/{numberTotal} complete</h1>
-    <h2>{getMessage()}</h2>
-    <TaskForm onAdd ={addTask}/>
-    {tasks.map((task, index : number)=> (
-      <Task {...task} 
-        onRename={newName => renameTask(index,newName)}
-        onTrash={() => removeTask(index)}
-        onToggle={done => updateTaskDone(index, done)}/>
-    ))}
-   </main>
+    <main>
+      <h1>{numberComplete}/{numberTotal} complete</h1>
+      <h2>{getMessage()}</h2>
+      <TaskForm onAdd={addTask} />
+      {tasks.map((task, index) => (
+        <Task {...task} 
+          onRename={newName => renameTask(index, newName)}
+          onTrash={() => removeTask(index)}
+          onToggle={done => updateTaskDone(index, done)} 
+          key={index} />
+      ))}
+    </main>
   );
+  
 }
 
 export default App;

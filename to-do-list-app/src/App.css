@@ -50,7 +50,7 @@ div.task.done{
 }
 div.task-name, div.task form{
   flex-grow:1;
-  height: 20px;
+ 
 }
 div.task span{
   position:relative;
