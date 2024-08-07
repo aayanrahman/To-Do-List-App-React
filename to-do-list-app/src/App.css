@@ -6,7 +6,7 @@ body{
   box-sizing: border-box;
 }
 main{
-  max-width: 300px;
+  max-width: 400px;
   margin: 20px auto;
 }
 form{
@@ -26,6 +26,7 @@ form input[type="text"] {
 form button{
   background-color: #61DAFB;
   border:0;
+  height: 20px;
   border-radius: 6px;
   cursor:pointer;
 }
@@ -49,6 +50,7 @@ div.task.done{
 }
 div.task-name, div.task form{
   flex-grow:1;
+  height: 20px;
 }
 div.task span{
   position:relative;

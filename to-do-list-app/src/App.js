@@ -71,7 +71,6 @@ function App() {
         onTrash={() => removeTask(index)}
         onToggle={done => updateTaskDone(index, done)}/>
     ))}
-
    </main>
   );
 }
