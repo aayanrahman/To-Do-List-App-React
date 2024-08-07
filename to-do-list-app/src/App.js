@@ -1,7 +1,7 @@
 import './App.css';
 import TaskForm from './TaskForm';
-import Task from './Task'
-import {useEffect, useState} from "react";
+import Task from './Task';
+import { useEffect, useState } from "react";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -10,18 +10,17 @@ function App() {
   useEffect(() => {
     if (tasks.length === 0) return;
     localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks])
+  }, [tasks]);
+
   useEffect(() => {
-    const tasks = JSON.parse(localStorage.getItem("tasks"));
-    setTasks(tasks);
-  }, [])
+    const tasksFromLocalStorage = JSON.parse(localStorage.getItem("tasks"));
+    // Check if tasksFromLocalStorage is null and set an empty array if it is
+    setTasks(tasksFromLocalStorage || []);
+  }, []);
 
-
-  //Creating tasks 
+  // Creating tasks 
   function addTask(name) {
-    setTasks(prev => {
-      return [...prev, {name: name, done:false}]; 
-    })
+    setTasks(prev => [...prev, { name: name, done: false }]);
   }
 
   function updateTaskDone(taskIndex, newDone) {
@@ -29,20 +28,18 @@ function App() {
       const newTasks = [...prev];
       newTasks[taskIndex].done = newDone;
       return newTasks;
-    }); 
+    });
   }
   
-  const numberComplete = tasks.filter(t=> t.done).length;
-  const numberTotal = tasks.length
+  const numberComplete = (tasks || []).filter(t => t.done).length;
+  const numberTotal = tasks.length;
 
   function removeTask(indexToRemove) {
-    setTasks(prev => {
-      return prev.filter((taskObject,index) => index !== indexToRemove);
-    });
+    setTasks(prev => prev.filter((_, index) => index !== indexToRemove));
   }
 
   function getMessage() {
-    const percentage = numberComplete/numberTotal * 100;
+    const percentage = numberTotal > 0 ? (numberComplete / numberTotal) * 100 : 0;
     if (percentage === 0) {
       return 'Get One Done 💫';
     }
@@ -52,12 +49,12 @@ function App() {
     return 'Keep going 🔒';
   }
 
-  function renameTask(index,newName) {
+  function renameTask(index, newName) {
     setTasks(prev => {
       const newTasks = [...prev];
       newTasks[index].name = newName;
       return newTasks;
-    })
+    });
   }
 
   return (
@@ -66,15 +63,17 @@ function App() {
       <h2>{getMessage()}</h2>
       <TaskForm onAdd={addTask} />
       {tasks.map((task, index) => (
-        <Task {...task} 
+        <Task
+          {...task}
           onRename={newName => renameTask(index, newName)}
           onTrash={() => removeTask(index)}
-          onToggle={done => updateTaskDone(index, done)} 
-          key={index} />
+          onToggle={done => updateTaskDone(index, done)}
+          key={index}
+        />
       ))}
     </main>
   );
-  
 }
 
 export default App;
+
