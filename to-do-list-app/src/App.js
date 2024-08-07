@@ -35,6 +35,12 @@ function App() {
   const numberComplete = tasks.filter(t=> t.done).length;
   const numberTotal = tasks.length
 
+  function removeTask(indexToRemove) {
+    setTasks(prev => {
+      return prev.filter((taskObject,index) => index !== indexToRemove);
+    });
+  }
+
   function getMessage() {
     const percentage = numberComplete/numberTotal * 100;
     if (percentage === 0) {
@@ -53,7 +59,8 @@ function App() {
     <TaskForm onAdd ={addTask}/>
     {tasks.map((task, index : number)=> (
       <Task {...task} 
-        onToggle={done => updateTaskDone(index, done) }/>
+        onTrash={() => removeTask(index)}
+        onToggle={done => updateTaskDone(index, done)}/>
     ))}
 
    </main>
